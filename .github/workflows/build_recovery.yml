@@ -143,3 +143,10 @@ jobs:
         botToken: ${{ secrets.TELEGRAM_TOKEN }}
         jobStatus: ${{ job.status }}
         skipSuccess: true
+    - name: Release build
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.CHANNEL_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: ${{ github.repository }} on ${{ github.sha }} is built!
+        document: ${{ steps.<step id>.outputs.outfile }}
