@@ -134,3 +134,12 @@ jobs:
           Target: ${{ github.event.inputs.BUILD_TARGET }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Telegram Notification
+      if: ${{ cancelled() || failure() }}
+      continue-on-error: true
+      uses: xinthink/action-telegram@v1.1
+      with:
+        chatId: ${{ secrets.GROUP_CHAT_ID }}
+        botToken: ${{ secrets.TELEGRAM_TOKEN }}
+        jobStatus: ${{ job.status }}
+        skipSuccess: true
