@@ -143,10 +143,15 @@ jobs:
         botToken: ${{ secrets.TELEGRAM_TOKEN }}
         jobStatus: ${{ job.status }}
         skipSuccess: true
-    - name: Release build
-      uses: appleboy/telegram-action@master
+    - name: Send Telegram Notification on New Release
+      uses: cbrgm/telegram-github-action@v1
       with:
-        to: ${{ secrets.CHANNEL_ID }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: ${{ github.repository }} on ${{ github.sha }} is built!
-        document: ${{ steps.<step id>.outputs.outfile }}
+        to: ${{ secrets.CHANNEL_ID }}
+        message: |
+          🚀 New Recovery Build!
+          Release Name: ${{ github.event.release.name }}
+          Tag: ${{ github.event.release.tag_name }}
+          Actor: ${{ github.actor }}
+          Repository: ${{ github.repository }}
+          Check it out: ${{ github.event.release.html_url }}j
